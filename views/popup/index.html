@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="popup.css">
+  <script type="module" src="popup.js"></script>
+  <title>Jaeger Debugger</title>
+</head>
+<body>
+  <main>
+    <section class="buttons-wrapper">
+      <button id="clean-requests-btn" class="btn-danger">
+        <i class="fa fa-trash"></i>
+      </button>
+      <button id="config-page-btn" class="btn">
+        <i class="fa fa-cog"></i>
+      </button>
+    </section>
+    <section class="list-wrapper">
+      <table id="request_list">
+        <thead>
+          <tr>
+            <th>Method</th>
+            <th>Status</th>
+            <th class="description">Description</th>
+            <th>Duration</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+      </table>
+    </section>
+  </main>
+</body>
+</html>

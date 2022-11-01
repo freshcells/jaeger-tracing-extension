@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="configuration.css">
+  <script type="module" src="configuration.js"></script>
+  <title>Configuration</title>
+</head>
+<body>
+  <header>
+    <nav>
+      <ul class="menu">
+        <li class="menu-item" data-section="register">New Configuration</li>
+        <li class="menu-item" data-section="list">Configuration List</li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section id="register">
+      <form class="registration-form" action="">
+        <label for="host">Website Host*</label>
+        <input type="text" name="host" id="host" required>
+
+        <label for="jaeger_url">Jaeger URL*</label>
+        <input type="text" name="jaeger_url" id="jaeger_url" required>
+        
+        <label for="auth_user">Auth User</label>
+        <input type="text" name="auth_user" id="auth_user">
+        
+        <label for="auth_password">Auth Password</label>
+        <input type="text" name="auth_password" id="auth_password">
+        
+        <button type="submit">Save</button>
+      </form>
+    </section>
+    <section id="list">
+      <table class="configuration-table">
+        <thead>
+          <tr>
+            <th>Website Host</th>
+            <th>Jaeger URL</th>
+            <th>Auth User</th>
+            <th>Auth Password</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </main>
+  <div id="snackbar"></div>
+</body>
+</html>
