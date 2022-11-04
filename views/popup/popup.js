@@ -58,24 +58,13 @@ async function mountTableContent(requests) {
 
   if (filtered.length) {
     filtered.forEach((request) => {
-      const row = table.insertRow(-1);
-      row.insertCell(-1).innerHTML = request.method;
-      row.insertCell(-1).innerHTML = request.status;
-      row.insertCell(-1).innerHTML = request.description;
-      row.insertCell(-1).innerHTML = request.time.toFixed(2) + 'ms';
-      row.insertCell(-1).innerHTML = config
-        ? `<a href="${mountJaegerLink(
-            config.jaeger_url,
-            request.traceId,
-            config.user,
-            config.pwd
-          )}" rel="noopener noreferrer" target="_blank">See on Jaeger</a>`
-        : 'Please, configure the extension for this host';
+      addRow(table, request, config);
     });
   } else {
     table.innerHTML = `
       <thead>
         <tr>
+          <th>Date</th>
           <th>Method</th>
           <th>Status</th>
           <th class="description">Description</th>
@@ -98,20 +87,25 @@ async function appendNewRequest(request) {
   const requestHostname = getDomainFromURL(request.initiator);
 
   if (requestHostname === hostname && request.traceId) {
-    const row = table.insertRow(-1);
-    row.insertCell(-1).innerHTML = request.method;
-    row.insertCell(-1).innerHTML = request.status;
-    row.insertCell(-1).innerHTML = request.description;
-    row.insertCell(-1).innerHTML = request.time.toFixed(2) + 'ms';
-    row.insertCell(-1).innerHTML = config
-      ? `<a href="${mountJaegerLink(
-          config.jaeger_url,
-          request.traceId,
-          config.user,
-          config.pwd
-        )}" rel="noopener noreferrer" target="_blank">See on Jaeger</a>`
-      : 'Please, configure the extension for this host';
+    addRow(table, request, config);
   }
+}
+
+function addRow(table, request, config) {
+  const row = table.insertRow(-1);
+  row.insertCell(-1).innerHTML = new Date(request.date).toLocaleString();
+  row.insertCell(-1).innerHTML = request.method;
+  row.insertCell(-1).innerHTML = request.status;
+  row.insertCell(-1).innerHTML = request.description;
+  row.insertCell(-1).innerHTML = request.time.toFixed(2) + 'ms';
+  row.insertCell(-1).innerHTML = config
+    ? `<a href="${mountJaegerLink(
+        config.jaeger_url,
+        request.traceId,
+        config.user,
+        config.pwd
+      )}" rel="noopener noreferrer" target="_blank">See on Jaeger</a>`
+    : 'Please, configure the extension for this host';
 }
 
 async function openConfigPage() {

@@ -38,6 +38,7 @@ async function onBeforeRequest(details) {
 
     requests.push({
       traceDate: traceDate.getTime(),
+      date: new Date().getTime(),
       requestId: details.requestId,
       description,
       initiator: details.initiator,
@@ -49,6 +50,7 @@ async function onBeforeRequest(details) {
   } else {
     requests.push({
       traceDate,
+      date: new Date().getTime(),
       requestId: details.requestId,
       description: details.url,
       initiator: details.initiator,
