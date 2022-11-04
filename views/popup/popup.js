@@ -22,6 +22,23 @@ async function init() {
   document
     .getElementById('clean-requests-btn')
     .addEventListener('click', cleanRequests);
+
+  listenForRequests();
+}
+
+async function listenForRequests() {
+  chrome.runtime.onMessage.addListener(async function (
+    message,
+    _sender,
+    sendResponse
+  ) {
+    if (message.type === 'new_request') {
+      sendResponse();
+      await appendNewRequest(message.request);
+      return;
+    }
+    sendResponse();
+  });
 }
 
 async function mountTableContent(requests) {
@@ -67,6 +84,33 @@ async function mountTableContent(requests) {
         </tr>
       </thead>
       `;
+  }
+}
+
+async function appendNewRequest(request) {
+  const table = document.getElementById('request_list');
+  if (!table) {
+    throw new Error('Could not find table');
+  }
+
+  const hostname = await getCurrentTabHostname();
+  const config = await getConfigurationByHost(hostname);
+  const requestHostname = getDomainFromURL(request.initiator);
+
+  if (requestHostname === hostname && request.traceId) {
+    const row = table.insertRow(-1);
+    row.insertCell(-1).innerHTML = request.method;
+    row.insertCell(-1).innerHTML = request.status;
+    row.insertCell(-1).innerHTML = request.description;
+    row.insertCell(-1).innerHTML = request.time.toFixed(2) + 'ms';
+    row.insertCell(-1).innerHTML = config
+      ? `<a href="${mountJaegerLink(
+          config.jaeger_url,
+          request.traceId,
+          config.user,
+          config.pwd
+        )}" rel="noopener noreferrer" target="_blank">See on Jaeger</a>`
+      : 'Please, configure the extension for this host';
   }
 }
 
