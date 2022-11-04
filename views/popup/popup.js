@@ -35,7 +35,8 @@ async function mountTableContent(requests) {
 
   const filtered = requests.filter((request) => {
     const requestHostname = getDomainFromURL(request.initiator);
-    return requestHostname === hostname;
+    // Filter requests by hostname and requests that have a traceId (finished)
+    return requestHostname === hostname && request.traceId;
   });
 
   if (filtered.length) {

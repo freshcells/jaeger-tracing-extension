@@ -21,6 +21,7 @@ chrome.webRequest.onCompleted.addListener(
 );
 
 async function onBeforeRequest(details) {
+  console.log('onBeforeRequest', details);
   const { requests } = await getRequests();
   const traceDate = new Date();
   traceDate.setHours(0, 0, 0, 0);
@@ -63,6 +64,7 @@ async function onBeforeRequest(details) {
 }
 
 async function onCompleted(details) {
+  console.log('onCompleted', details);
   const { requests } = await getRequests();
   const requestIndex = requests.findIndex(
     (r) => r.requestId === details.requestId
