@@ -80,7 +80,15 @@ async function onCompleted(details) {
     request.time = details.timeStamp - request.time;
     if (request.traceId) {
       requests[requestIndex] = request;
-      await chrome.runtime.sendMessage(null, { type: 'new_request', request });
+      try {
+        await chrome.runtime.sendMessage(null, {
+          type: 'new_request',
+          request,
+        });
+      } catch (error) {
+        // Extension popup is not open
+        console.error(error);
+      }
     } else {
       requests.splice(requestIndex, 1);
     }
