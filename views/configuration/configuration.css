@@ -61,13 +61,17 @@ section.active {
   display: block;
 }
 
-.registration-form {
+.registration-form, .import-form {
   width: 400px;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
+}
+
+.import-form {
+  margin: auto;
 }
 
 input {
@@ -87,8 +91,11 @@ button[type="submit"] {
 }
 
 table {
+  display: block;
   width: 100%;
   border-collapse: collapse;
+  overflow-y: scroll;
+  height: 500px;
 }
 
 table td {
@@ -126,6 +133,10 @@ table th {
 
 .delete-btn:hover {
   background: #a52a2a;
+}
+
+#import p {
+  text-align: center;
 }
 
 #snackbar {

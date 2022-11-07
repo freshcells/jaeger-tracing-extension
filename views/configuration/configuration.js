@@ -8,7 +8,8 @@ let edit = false;
 
 function init() {
   registerMenuEventListeners();
-  registerFormEventListeners();
+  registerRegistrationFormEventListener();
+  registerImportFormEventListener();
 }
 
 function registerMenuEventListeners() {
@@ -57,7 +58,7 @@ function registerMenuEventListeners() {
   }
 }
 
-function registerFormEventListeners() {
+function registerRegistrationFormEventListener() {
   const form = document.querySelector('.registration-form');
   form.addEventListener('submit', async function (event) {
     event.preventDefault();
@@ -85,6 +86,39 @@ function registerFormEventListeners() {
     } else {
       showSnackbar('Configuration already exists', 'error');
     }
+  });
+}
+
+function registerImportFormEventListener() {
+  const form = document.querySelector('.import-form');
+  form.addEventListener('submit', async function (event) {
+    event.preventDefault();
+
+    const formData = new FormData(form);
+    const file = formData.get('import_file');
+    const reader = new FileReader();
+    reader.onload = async function (e) {
+      const data = JSON.parse(e.target.result);
+
+      if (!Array.isArray(data)) {
+        showSnackbar('Invalid file, please check the example.', 'error');
+        return;
+      }
+
+      const { configuration } = await getConfiguration();
+      data.forEach((config) => {
+        const index = configuration.findIndex((c) => c.host === config.host);
+        // Only add new configurations
+        if (index === -1) {
+          configuration.push(config);
+        }
+      });
+
+      await chrome.storage.local.set({ configuration });
+      showSnackbar('Configuration imported');
+      event.target.reset();
+    };
+    reader.readAsText(file);
   });
 }
 

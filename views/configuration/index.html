@@ -13,6 +13,7 @@
     <nav>
       <ul class="menu">
         <li class="menu-item" data-section="register">New Configuration</li>
+        <li class="menu-item" data-section="import">Import Configuration</li>
         <li class="menu-item" data-section="list">Configuration List</li>
       </ul>
     </nav>
@@ -32,6 +33,23 @@
         <label for="auth_password">Auth Password</label>
         <input type="text" name="auth_password" id="auth_password">
         
+        <button type="submit">Save</button>
+      </form>
+    </section>
+    <section id="import">
+      <p>Import configuration using a JSON file in this format:</p>
+      <pre>   
+        [
+          { 
+            "host": "The website host", 
+            "jaeger_url": "The Jaeger URL to redirect. It must contain the /trace/ path", 
+            "auth_user": "Basic auth user if necessary, leave it blank for no value",
+            "auth_password": "Basic auth password if necessary, leave it blank for no value"
+          }
+        ]
+      </pre>
+      <form class="import-form" action="">
+        <input type="file" name="import_file" id="import_file"  />
         <button type="submit">Save</button>
       </form>
     </section>
