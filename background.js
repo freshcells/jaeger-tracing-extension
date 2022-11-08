@@ -49,7 +49,7 @@ async function onBeforeRequest(details) {
     });
   } else {
     requests.push({
-      traceDate,
+      traceDate: traceDate.getTime(),
       date: new Date().getTime(),
       requestId: details.requestId,
       description: details.url,
@@ -86,8 +86,7 @@ async function onCompleted(details) {
           request,
         });
       } catch (error) {
-        // Extension popup is not open
-        console.error(error);
+        // Extension popup is not open. Ignoring error.
       }
     } else {
       requests.splice(requestIndex, 1);
