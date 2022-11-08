@@ -2,6 +2,8 @@ import {
   getConfigurationByHost,
   getDomainFromURL,
   getConfiguration,
+  checkConfigObject,
+  sanitizeConfig,
 } from '../../utils.js';
 
 let edit = false;
@@ -98,19 +100,35 @@ function registerImportFormEventListener() {
     const file = formData.get('import_file');
     const reader = new FileReader();
     reader.onload = async function (e) {
-      const data = JSON.parse(e.target.result);
+      let data;
+      try {
+        data = JSON.parse(e.target.result);
+      } catch (error) {
+        showSnackbar('Invalid JSON file.', 'error');
+        event.target.reset();
+        return;
+      }
 
       if (!Array.isArray(data)) {
         showSnackbar('Invalid file, please check the example.', 'error');
+        event.target.reset();
+        return;
+      }
+
+      if (data.length === 0) {
+        showSnackbar('Empty JSON, there is nothing to import.', 'error');
+        event.target.reset();
         return;
       }
 
       const { configuration } = await getConfiguration();
       data.forEach((config) => {
-        const index = configuration.findIndex((c) => c.host === config.host);
-        // Only add new configurations
-        if (index === -1) {
-          configuration.push(config);
+        if (checkConfigObject(config)) {
+          const index = configuration.findIndex((c) => c.host === config.host);
+          // Only add new configurations
+          if (index === -1) {
+            configuration.push(sanitizeConfig(config));
+          }
         }
       });
 

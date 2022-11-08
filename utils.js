@@ -44,3 +44,18 @@ export async function cleanRequestsByHost(host) {
 
   await chrome.storage.local.set({ requests: newRequests });
 }
+
+export function checkConfigObject(config) {
+  return (
+    config.host && config.jaeger_url && config.auth_user && config.auth_password
+  );
+}
+
+export function sanitizeConfig(config) {
+  return {
+    host: config.host,
+    jaeger_url: config.jaeger_url,
+    auth_user: config.auth_user,
+    auth_password: config.auth_password,
+  };
+}
