@@ -47,7 +47,10 @@ export async function cleanRequestsByHost(host) {
 
 export function checkConfigObject(config) {
   return (
-    config.host && config.jaeger_url && config.auth_user && config.auth_password
+    config.host &&
+    config.jaeger_url &&
+    'auth_user' in config &&
+    'auth_password' in config
   );
 }
 
