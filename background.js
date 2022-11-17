@@ -30,10 +30,7 @@ async function onBeforeRequest(details) {
     const body = parseRequestBody(details.requestBody);
 
     if (body && body.query && /query|mutation/.test(body.query)) {
-      description =
-        'operationName' in body
-          ? 'Operation: ' + body.operationName
-          : description;
+      description = 'operationName' in body ? body.operationName : description;
     }
 
     requests.push({
