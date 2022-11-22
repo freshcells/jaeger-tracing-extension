@@ -103,7 +103,9 @@ function addRow(table, request, config) {
         config.jaeger_url,
         request.traceId,
         config.user,
-        config.pwd
+        config.pwd,
+        request.isGraphQL,
+        request.description
       )}" rel="noopener noreferrer" target="_blank">See on Jaeger</a>`
     : 'Please, configure the extension for this host';
 }
@@ -128,7 +130,14 @@ async function cleanRequests() {
   await mountTableContent(requests);
 }
 
-function mountJaegerLink(url, traceId, user, pwd) {
+function mountJaegerLink(
+  url,
+  traceId,
+  user,
+  pwd,
+  isGraphQL = false,
+  operationName
+) {
   if (Boolean(user) && Boolean(pwd)) {
     const parsedUrl = new URL(url);
     return (
@@ -140,11 +149,12 @@ function mountJaegerLink(url, traceId, user, pwd) {
       '@' +
       parsedUrl.host +
       parsedUrl.pathname +
-      traceId
+      traceId +
+      (isGraphQL ? `?uiFind=${operationName}` : '')
     );
   }
 
-  return url + traceId;
+  return url + traceId + (isGraphQL ? `?uiFind=${operationName}` : '');
 }
 
 init();

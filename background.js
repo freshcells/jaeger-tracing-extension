@@ -25,37 +25,32 @@ async function onBeforeRequest(details) {
   const traceDate = new Date();
   traceDate.setHours(0, 0, 0, 0);
 
-  let description = details.url;
+  const requestDetails = {
+    traceDate: traceDate.getTime(),
+    date: new Date().getTime(),
+    requestId: details.requestId,
+    description: details.url,
+    initiator: details.initiator,
+    method: details.method,
+    status: null,
+    traceId: null,
+    time: details.timeStamp,
+    isGraphQL: false,
+  };
+
   if (details.requestBody && Object.keys(details.requestBody).length > 0) {
     const body = parseRequestBody(details.requestBody);
-
     if (body && body.query && /query|mutation/.test(body.query)) {
-      description = 'operationName' in body ? body.operationName : description;
+      requestDetails.description =
+        'operationName' in body
+          ? body.operationName
+          : requestDetails.description;
+      requestDetails.isGraphQL = true;
     }
 
-    requests.push({
-      traceDate: traceDate.getTime(),
-      date: new Date().getTime(),
-      requestId: details.requestId,
-      description,
-      initiator: details.initiator,
-      method: details.method,
-      status: null,
-      traceId: null,
-      time: details.timeStamp,
-    });
+    requests.push(requestDetails);
   } else {
-    requests.push({
-      traceDate: traceDate.getTime(),
-      date: new Date().getTime(),
-      requestId: details.requestId,
-      description: details.url,
-      initiator: details.initiator,
-      method: details.method,
-      status: null,
-      traceId: null,
-      time: details.timeStamp,
-    });
+    requests.push(requestDetails);
   }
 
   await chrome.storage.local.set({ requests });
