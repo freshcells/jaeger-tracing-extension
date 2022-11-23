@@ -154,6 +154,7 @@ function registerConfigActionListeners() {
       form.jaeger_url.value = config.jaeger_url;
       form.auth_user.value = config.auth_user;
       form.auth_password.value = config.auth_password;
+      form.enable_search.checked = config.enable_search || false;
 
       navigateToSection('register');
     });
@@ -186,6 +187,7 @@ async function loadConfigurationTable() {
       <td>${config.jaeger_url}</td>
       <td>${config.auth_user || '-'}</td>
       <td>${config.auth_password || '-'}</td>
+      <td>${renderSearchTerm(config.enable_search)}</td>
       <td>
         <button class="edit-btn" data-host="${config.host}">Edit</button>
         <button class="delete-btn" data-host="${config.host}">Delete</button>
@@ -205,6 +207,13 @@ function navigateToSection(section) {
       menuItems[i].click();
     }
   }
+}
+
+function renderSearchTerm(enabled) {
+  if (!enabled) {
+    return 'Disabled';
+  }
+  return 'Enabled';
 }
 
 function resetForm() {

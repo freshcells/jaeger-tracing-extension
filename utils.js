@@ -60,5 +60,6 @@ export function sanitizeConfig(config) {
     jaeger_url: config.jaeger_url,
     auth_user: config.auth_user,
     auth_password: config.auth_password,
+    enable_search: Boolean(config.enable_search) || false,
   };
 }

@@ -100,10 +100,8 @@ function addRow(table, request, config) {
   row.insertCell(-1).innerHTML = request.time.toFixed(2) + 'ms';
   row.insertCell(-1).innerHTML = config
     ? `<a href="${mountJaegerLink(
-        config.jaeger_url,
+        config,
         request.traceId,
-        config.user,
-        config.pwd,
         request.isGraphQL,
         request.description
       )}" rel="noopener noreferrer" target="_blank">See on Jaeger</a>`
@@ -130,14 +128,14 @@ async function cleanRequests() {
   await mountTableContent(requests);
 }
 
-function mountJaegerLink(
-  url,
-  traceId,
-  user,
-  pwd,
-  isGraphQL = false,
-  operationName
-) {
+function mountJaegerLink(config, traceId, isGraphQL = false, operationName) {
+  const {
+    jaeger_url: url,
+    auth_user: user,
+    auth_password: pwd,
+    enable_search,
+  } = config;
+
   if (Boolean(user) && Boolean(pwd)) {
     const parsedUrl = new URL(url);
     return (
@@ -150,11 +148,15 @@ function mountJaegerLink(
       parsedUrl.host +
       parsedUrl.pathname +
       traceId +
-      (isGraphQL ? `?uiFind=${operationName}` : '')
+      (enable_search && isGraphQL ? `?uiFind=${operationName}` : '')
     );
   }
 
-  return url + traceId + (isGraphQL ? `?uiFind=${operationName}` : '');
+  return (
+    url +
+    traceId +
+    (enable_search && isGraphQL ? `?uiFind=${operationName}` : '')
+  );
 }
 
 init();
