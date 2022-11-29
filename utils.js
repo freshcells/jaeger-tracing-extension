@@ -63,3 +63,21 @@ export function sanitizeConfig(config) {
     enable_search: Boolean(config.enable_search) || false,
   };
 }
+
+export function numberToMonth(number) {
+  const months = [
+    'JAN',
+    'FEB',
+    'MAR',
+    'APR',
+    'MAY',
+    'JUN',
+    'JUL',
+    'AUG',
+    'SEP',
+    'OCT',
+    'NOV',
+    'DEC',
+  ];
+  return months[number];
+}

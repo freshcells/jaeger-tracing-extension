@@ -4,22 +4,20 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="popup.css">
   <script type="module" src="popup.js"></script>
-  <title>Jaeger Debugger</title>
+  <title>Jaeger UI</title>
 </head>
 <body>
   <main>
-    <section class="buttons-wrapper">
-      <button id="clean-requests-btn" class="btn-danger">
-        <i class="fa fa-trash"></i>
-      </button>
-      <button id="config-page-btn" class="btn">
-        <i class="fa fa-cog"></i>
-      </button>
+    <section class="header">
+      <h1>Jaeger UI</h1>
+      <i class="header-close-btn"></i>
     </section>
-    <section class="list-wrapper">
+    <section class="list">
       <table id="request_list">
         <thead>
           <tr>
@@ -31,7 +29,13 @@
             <th>Trace</th>
           </tr>
         </thead>
+        <tbody></tbody>
       </table>
+    </section>
+
+    <section class="buttons">
+      <button id="clear" class="btn-clear" type="button">Clear</button>
+      <button id="settings" class="btn-settings" type="button">Settings</button>
     </section>
   </main>
 </body>

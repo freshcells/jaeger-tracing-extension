@@ -5,6 +5,7 @@ import {
   getDomainFromURL,
   getRequests,
   cleanRequestsByHost,
+  numberToMonth,
 } from '../../utils.js';
 
 async function init() {
@@ -16,12 +17,10 @@ async function init() {
   }
 
   document
-    .getElementById('config-page-btn')
-    .addEventListener('click', openConfigPage);
-
-  document
-    .getElementById('clean-requests-btn')
-    .addEventListener('click', cleanRequests);
+    .getElementsByClassName('header-close-btn')[0]
+    .addEventListener('click', closePopup);
+  document.getElementById('settings').addEventListener('click', openConfigPage);
+  document.getElementById('clear').addEventListener('click', cleanRequests);
 
   listenForRequests();
 }
@@ -72,6 +71,7 @@ async function mountTableContent(requests) {
           <th>Trace</th>
         </tr>
       </thead>
+      <tbody></tbody>
       `;
   }
 }
@@ -92,20 +92,33 @@ async function appendNewRequest(request) {
 }
 
 function addRow(table, request, config) {
-  const row = table.insertRow(-1);
-  row.insertCell(-1).innerHTML = new Date(request.date).toLocaleString();
-  row.insertCell(-1).innerHTML = request.method;
-  row.insertCell(-1).innerHTML = request.status;
-  row.insertCell(-1).innerHTML = request.description;
-  row.insertCell(-1).innerHTML = request.time.toFixed(2) + 'ms';
+  const row = table.getElementsByTagName('tbody')[0].insertRow(-1);
+
+  const dateRow = row.insertCell(-1);
+  dateRow.innerHTML = renderDate(new Date(request.date));
+
+  const methodRow = row.insertCell(-1);
+  methodRow.setAttribute('class', request.method.toLowerCase());
+  methodRow.innerHTML = request.method;
+
+  const statusRow = row.insertCell(-1);
+  statusRow.innerHTML = request.status;
+
+  const descriptionRow = row.insertCell(-1);
+  descriptionRow.innerHTML = request.description;
+
+  const timeRow = row.insertCell(-1);
+  timeRow.setAttribute('class', getTimeClassname(request.time));
+  timeRow.innerHTML = request.time.toFixed(2) + 'ms';
+
   row.insertCell(-1).innerHTML = config
-    ? `<a href="${mountJaegerLink(
+    ? `<a class="view" href="${mountJaegerLink(
         config,
         request.traceId,
         request.isGraphQL,
         request.description
-      )}" rel="noopener noreferrer" target="_blank">See on Jaeger</a>`
-    : 'Please, configure the extension for this host';
+      )}" rel="noopener noreferrer" target="_blank">View</a>`
+    : '-';
 }
 
 async function openConfigPage() {
@@ -157,6 +170,28 @@ function mountJaegerLink(config, traceId, isGraphQL = false, operationName) {
     traceId +
     (enable_search && isGraphQL ? `?uiFind=${operationName}` : '')
   );
+}
+
+function closePopup() {
+  window.close();
+}
+
+function renderDate(date) {
+  return `<span class="date">${date.getDate()}. ${numberToMonth(
+    date.getMonth()
+  )},</span></br><span class="time">${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</span>`;
+}
+
+function getTimeClassname(time) {
+  if (time <= 200) {
+    return 'fast-response';
+  }
+
+  if (time < 1000) {
+    return 'medium-response';
+  }
+
+  return 'slow-response';
 }
 
 init();
