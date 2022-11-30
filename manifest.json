@@ -1,5 +1,5 @@
 {
-  "name": "Jaeger Debugger",
+  "name": "Jaeger UI",
   "description": "Capture and debug requests from your browser with Jaeger trace id",
   "version": "1.0.0",
   "manifest_version": 3,

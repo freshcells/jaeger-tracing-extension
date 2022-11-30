@@ -40,7 +40,7 @@ html, body {
 }
 
 .header > .header-close-btn {
-  background: url('./icons/close.png') no-repeat;
+  background: url('../../assets/images/close.png') no-repeat;
   background-size: 100%;
   cursor: pointer;
   width: 12px;
