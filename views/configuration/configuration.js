@@ -135,9 +135,51 @@ function registerImportFormEventListener() {
       await chrome.storage.local.set({ configuration });
       showSnackbar('Configuration imported');
       event.target.reset();
+      document.getElementById('drag-area').innerHTML = `
+        <image src="../../assets/images/file.png" alt="File icon" />
+        <p>Select a JSON file to upload</p>
+        <p>or drag & drop it here</p>
+      `;
+      document.getElementById('submit-import').setAttribute('disabled', '');
     };
     reader.readAsText(file);
   });
+
+  const dragArea = document.getElementById('drag-area');
+  dragArea.addEventListener('click', (event) => {
+    event.preventDefault();
+    document.getElementById('import_file').click();
+  });
+  dragArea.addEventListener('dragover', function (event) {
+    this.style.opacity = '0.4';
+    event.preventDefault();
+  });
+  dragArea.addEventListener('dragleave', function (event) {
+    this.style.opacity = '1';
+    event.preventDefault();
+  });
+  dragArea.addEventListener('drop', function (event) {
+    document.getElementById('import_file').files = event.dataTransfer.files;
+    this.style.opacity = '1';
+    this.innerHTML = `
+      <image src="../../assets/images/file.png" alt="File icon" />
+      <p>One file selected</p>
+      <p>${event.dataTransfer.files[0].name}</p>
+    `;
+    document.getElementById('submit-import').removeAttribute('disabled');
+    event.preventDefault();
+  });
+
+  document
+    .getElementById('import_file')
+    .addEventListener('change', function (event) {
+      dragArea.innerHTML = `
+        <image src="../../assets/images/file.png" alt="File icon" />
+        <p>One file selected</p>
+        <p>${event.target.files[0].name}</p>
+      `;
+      document.getElementById('submit-import').removeAttribute('disabled');
+    });
 }
 
 function registerConfigActionListeners() {
@@ -189,8 +231,10 @@ async function loadConfigurationTable() {
       <td>${config.auth_password || '-'}</td>
       <td>${renderSearchTerm(config.enable_search)}</td>
       <td>
-        <button class="edit-btn" data-host="${config.host}">Edit</button>
-        <button class="delete-btn" data-host="${config.host}">Delete</button>
+        <span class="actions">
+          <i class="edit-btn" data-host="${config.host}"></i>
+          <i class="delete-btn" data-host="${config.host}"></i>
+        </span>
       </td>
     `;
     table.appendChild(row);

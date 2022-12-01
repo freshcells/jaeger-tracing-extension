@@ -1,26 +1,6 @@
-:root {
-  /* Colors */
-  --white: #ffffff;
-  --black: #021431;
-  --grey: #F5F5F5;
-  --grey-light: #EEEFF0;
-  --brand-primary: #00458A;
-  --brand-secondary: #58CBFA;
-  --warning: #F49E00;
-  --danger: #B31337;
-  --success: #73B116;
-}
-
 html, body {
   height: 400px;
   width: 800px;
-  margin: 0;
-  padding: 0;
-  font-family: 'Inter', sans-serif;
-  font-size: 12px;
-  color: var(--black);
-  background: var(--white);
-  overflow: hidden;
 }
 
 .header {
@@ -65,7 +45,7 @@ table {
 
 table thead {
   height: 54px;
-  background: var(--grey);
+  background: var(--grey-lighter);
   box-shadow: inset 0px -1px 0px var(--brand-primary);
   border-radius: 0px;
 }
@@ -91,7 +71,7 @@ table thead tr th:nth-child(1) {
 }
 
 table tbody tr:nth-child(even) {
-  background: var(--grey-light);
+  background: var(--grey-lighter);
 }
 
 table tbody tr td:nth-child(1) {
@@ -142,7 +122,7 @@ section.buttons {
   justify-content: space-between;
   align-items: center;
   height: 60px;
-  background: var(--grey-light);
+  background: var(--grey-lighter-light);
   border-top: 1px solid var(--white);
 }
 

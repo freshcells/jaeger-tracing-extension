@@ -5,75 +5,115 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="../../assets/images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/global.css">
   <link rel="stylesheet" href="configuration.css">
   <script type="module" src="configuration.js"></script>
   <title>Settings</title>
 </head>
 <body>
   <header>
-    <nav>
-      <ul class="menu">
-        <li class="menu-item" data-section="register">New Configuration</li>
-        <li class="menu-item" data-section="import">Import Configuration</li>
-        <li class="menu-item" data-section="list">Configuration List</li>
-      </ul>
-    </nav>
+      <image class="logo" src="../../assets/images/logo-freshcells-systems-engineering.png" alt="Freshcells Systems Engineering" />
   </header>
   <main>
-    <section id="register">
-      <form class="registration-form" action="">
-        <label for="host">Website Host*</label>
-        <input type="text" name="host" id="host" required>
+    <nav>
+      <ul class="menu">
+        <li class="menu-item" data-section="register">New Configuration <span><i class="arrow-icon"></i></span></li>
+        <li class="menu-item" data-section="import">Import Configuration <span><i class="arrow-icon"></i></span></li>
+        <li class="menu-item" data-section="list">Configuration List <span><i class="arrow-icon"></i></span></li>
+      </ul>
+    </nav>
 
-        <label for="jaeger_url">Jaeger URL*</label>
-        <input type="text" name="jaeger_url" id="jaeger_url" required>
-        
-        <label for="auth_user">Auth User</label>
-        <input type="text" name="auth_user" id="auth_user">
-        
-        <label for="auth_password">Auth Password</label>
-        <input type="text" name="auth_password" id="auth_password">
+    <div class="content">
 
-        <label for="enable_search">
-          <input type="checkbox" name="enable_search" id="enable_search"> 
-          Enable Search Term
-        </label>
-        
-        <button type="submit">Save</button>
-      </form>
-    </section>
-    <section id="import">
-      <p>Import configuration using a JSON file in this format:</p>
-      <pre>   
-        [
-          { 
-            "host": "The website host", 
-            "jaeger_url": "The Jaeger URL to redirect. It must contain the /trace/ path", 
-            "auth_user": "Basic auth user if necessary, leave it blank for no value",
-            "auth_password": "Basic auth password if necessary, leave it blank for no value"
-          }
-        ]
-      </pre>
-      <form class="import-form" action="">
-        <input type="file" name="import_file" id="import_file"  />
-        <button type="submit">Save</button>
-      </form>
-    </section>
-    <section id="list">
-      <table class="configuration-table">
-        <thead>
-          <tr>
-            <th>Website Host</th>
-            <th>Jaeger URL</th>
-            <th>Auth User</th>
-            <th>Auth Password</th>
-            <th>Search Term</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </section>
+      <div class="wrapper">
+
+        <section id="register" class="register">
+          <h2>New Configuration</h2>
+
+          <form class="registration-form" action="">
+
+            <div class="form-wrapper">
+
+              <label for="host">Website Host*</label>
+              <input type="text" name="host" id="host" required>
+      
+              <label for="jaeger_url">Jaeger URL*</label>
+              <input type="text" name="jaeger_url" id="jaeger_url" required>
+              
+              <label for="auth_user">Auth User</label>
+              <input type="text" name="auth_user" id="auth_user">
+              
+              <label for="auth_password">Auth Password</label>
+              <input type="text" name="auth_password" id="auth_password">
+      
+              <label for="enable_search">
+                <input type="checkbox" name="enable_search" id="enable_search"> 
+                Enable Search Term
+              </label>
+
+              <label for="">*Mandatory fields</label>
+              
+              <button type="submit">Save</button>
+            
+            </div>
+          </form>
+        </section>
+  
+        <section id="import" class="import">
+
+          <h2>
+              Import Configuration 
+              <div class="tooltip">
+                <i class="help-icon"></i>
+                <span class="tooltiptext">
+                  <p>Import configuration using a JSON file in this format:</p>
+                  <pre>   
+                    [
+                      { 
+                        "host": "The website host", 
+                        "jaeger_url": "The Jaeger URL to redirect. It must contain the /trace/ path", 
+                        "auth_user": "Basic auth user if necessary, leave it blank for no value",
+                        "auth_password": "Basic auth password if necessary, leave it blank for no value"
+                      }
+                    ]
+                    </pre>
+                </span>
+              </div>
+          </h2>
+          <form class="import-form" action="">
+            <input type="file" name="import_file" id="import_file"  />
+            <div id="drag-area" class="file-area">
+              <image src="../../assets/images/file.png" alt="File icon" />
+              <p>Select a JSON file to upload</p>
+              <p>or drag & drop it here</p>
+            </div>
+            <button id="submit-import" type="submit" disabled>Save</button>
+          </form>
+        </section>
+  
+        <section id="list" class="list">
+          <table class="configuration-table">
+            <thead>
+              <tr>
+                <th>Website Host</th>
+                <th>Jaeger URL</th>
+                <th>Auth User</th>
+                <th>Auth Password</th>
+                <th>Search Term</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </section>
+
+      </div>
+
+    </div>
+
   </main>
   <div id="snackbar"></div>
 </body>

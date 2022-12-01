@@ -1,0 +1,23 @@
+:root {
+  /* Colors */
+  --white: #ffffff;
+  --black: #021431;
+  --grey-dark: #A1A9B6;
+  --grey-light: #D4D6DA;
+  --grey-lighter: #F5F5F5;
+  --brand-primary: #00458A;
+  --brand-secondary: #58CBFA;
+  --warning: #F49E00;
+  --danger: #B31337;
+  --success: #73B116;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: var(--black);
+  background: var(--white);
+  overflow: hidden;
+}
