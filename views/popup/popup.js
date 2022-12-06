@@ -56,9 +56,13 @@ async function mountTableContent(requests) {
   });
 
   if (filtered.length) {
-    filtered.forEach((request) => {
-      addRow(table, request, config);
-    });
+    filtered
+      .sort((a, b) => {
+        return b.date - a.date;
+      })
+      .forEach((request) => {
+        addRow(table, request, config);
+      });
   } else {
     table.innerHTML = `
       <thead>
@@ -179,7 +183,15 @@ function closePopup() {
 function renderDate(date) {
   return `<span class="date">${date.getDate()}. ${numberToMonth(
     date.getMonth()
-  )},</span></br><span class="time">${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</span>`;
+  )},</span></br><span class="time">${padDateNumber(
+    date.getHours()
+  )}:${padDateNumber(date.getMinutes())}:${padDateNumber(
+    date.getSeconds()
+  )}</span>`;
+}
+
+function padDateNumber(number) {
+  return number.toString().padStart(2, '0');
 }
 
 function getTimeClassname(time) {
