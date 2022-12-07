@@ -1,6 +1,6 @@
 html, body {
-  height: 400px;
-  width: 800px;
+  height: 425px;
+  width: 597px;
 }
 
 .header {
@@ -29,7 +29,7 @@ html, body {
 }
 
 section.list {
-  height: 278px;
+  height: 304px;
   width: 100%;
   overflow: auto;
 }
@@ -38,8 +38,8 @@ table {
   width: 100%;
   border-collapse: collapse;
   font-weight: 400;
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 12px;
+  line-height: 19px;
   color: var(--black);
 }
 
@@ -52,8 +52,8 @@ table thead {
 
 table thead th {
   font-weight: 700;
-  font-size: 16px;
-  line-height: 23px;
+  font-size: 14px;
+  line-height: 20px;
   text-align: left;
 }
 
@@ -80,8 +80,8 @@ table tbody tr td:nth-child(1) {
 
 table tbody tr .date {
   font-weight: 700;
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 12px;
+  line-height: 19px;
 }
 
 table tbody tr .post {
@@ -107,8 +107,8 @@ table tbody tr .slow-response {
 table tbody tr .view {
   text-decoration: none;
   font-weight: 700;
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 12px;
+  line-height: 19px;
   color: var(--brand-primary);
 }
 
@@ -122,7 +122,7 @@ section.buttons {
   justify-content: space-between;
   align-items: center;
   height: 60px;
-  background: var(--grey-lighter-light);
+  background: #EEEFF0;
   border-top: 1px solid var(--white);
 }
 
