@@ -183,7 +183,7 @@ function closePopup() {
 function renderDate(date) {
   return `<span class="date">${date.getDate()}. ${numberToMonth(
     date.getMonth()
-  )},</span></br><span class="time">${padDateNumber(
+  )},</span><span class="time">${padDateNumber(
     date.getHours()
   )}:${padDateNumber(date.getMinutes())}:${padDateNumber(
     date.getSeconds()
